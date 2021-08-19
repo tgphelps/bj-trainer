@@ -13,7 +13,7 @@ PLAYER_HEIGHT = 600
 class GameWindow(tk.Tk):
     def __init__(self):
         super().__init__()
-        # self.configure(bg='red')
+        self.title("BJ Trainer")
         self.option_add('*tearOff', tk.FALSE)
 
         self.build_menu()
@@ -47,7 +47,7 @@ class GameWindow(tk.Tk):
 
     def build_bottom(self):
         self.button_frame = tk.Frame(self)
-        self.button_frame.grid(row=10,column=0)
+        self.button_frame.grid(row=10, column=0)
         self.button_stand = ttk.Button(self.button_frame, text='Stand')
         self.button_stand.grid(row=10, column=0)
         self.button_hit = ttk.Button(self.button_frame, text='Hit')
@@ -61,7 +61,7 @@ class GameWindow(tk.Tk):
         self.button_shuf = ttk.Button(self.button_frame, text='Shuffle')
         self.button_shuf.grid(row=10, column=5)
         self.button_test = ttk.Button(self.button_frame, text='TEST',
-                                       command=self.testing)
+                                      command=self.testing)
         self.button_test.grid(row=10, column=6)
 
         self.status_text = tk.StringVar()
