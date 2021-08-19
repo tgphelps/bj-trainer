@@ -2,7 +2,7 @@
 
 import tkinter as tk
 from tkinter import messagebox as tkmb
-# from tkinter import ttk
+from tkinter import ttk
 
 
 WINDOW_WIDTH = 1200
@@ -46,7 +46,29 @@ class GameWindow(tk.Tk):
         self.columnconfigure(0, weight=1)
 
     def build_bottom(self):
-        pass
+        self.button_frame = tk.Frame(self)
+        self.button_frame.grid(row=10,column=0)
+        self.button_stand = ttk.Button(self.button_frame, text='Stand')
+        self.button_stand.grid(row=10, column=0)
+        self.button_hit = ttk.Button(self.button_frame, text='Hit')
+        self.button_hit.grid(row=10, column=1)
+        self.button_dbl = ttk.Button(self.button_frame, text='Double')
+        self.button_dbl.grid(row=10, column=2)
+        self.button_split = ttk.Button(self.button_frame, text='Split')
+        self.button_split.grid(row=10, column=3)
+        self.button_surr = ttk.Button(self.button_frame, text='Surrender')
+        self.button_surr.grid(row=10, column=4)
+        self.button_shuf = ttk.Button(self.button_frame, text='Shuffle')
+        self.button_shuf.grid(row=10, column=5)
+        self.button_test = ttk.Button(self.button_frame, text='TEST',
+                                       command=self.testing)
+        self.button_test.grid(row=10, column=6)
+
+        self.status_text = tk.StringVar()
+        self.status_bar = ttk.Label(self, textvariable=self.status_text,
+                                    anchor='w')
+        self.status_bar.grid(row=11, column=0, sticky='ew')
+        self.status_text.set('My status bar')
 
     def show_about_window(self):
         tkmb.showinfo(message='About message goes here')
@@ -54,6 +76,9 @@ class GameWindow(tk.Tk):
         print(self.winfo_width(), self.winfo_height())
         print(self.dealer_canvas.winfo_width(),
               self.dealer_canvas.winfo_height())
+
+    def testing(self):
+        self.status_text.set('testing')
 
 
 if __name__ == '__main__':
