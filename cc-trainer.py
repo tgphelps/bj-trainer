@@ -3,10 +3,12 @@
 import tkinter as tk
 from tkinter import messagebox as tkmb
 from tkinter import ttk
+import random
 
 from Shoe import Shoe
 
 
+VERSION = '0.02'
 WINDOW_WIDTH = 300
 WINDOW_HEIGHT = 300
 
@@ -26,10 +28,10 @@ class GameWindow(tk.Tk):
         self['menu'] = menu_bar
 
         menu_file = tk.Menu(menu_bar)
-        menu_edit = tk.Menu(menu_bar)
+        menu_settings = tk.Menu(menu_bar)
         menu_help = tk.Menu(menu_bar)
         menu_bar.add_cascade(menu=menu_file, label='File')
-        menu_bar.add_cascade(menu=menu_edit, label='Edit')
+        menu_bar.add_cascade(menu=menu_settings, label='Settings')
         menu_bar.add_cascade(menu=menu_help, label='Help')
 
         menu_file.add_command(label='New manual session',
@@ -37,13 +39,24 @@ class GameWindow(tk.Tk):
         menu_file.add_command(label='New auto session')
         menu_file.add_command(label='Quit', command=self.quit)
 
-        menu_edit.add_command(label='Settings')
         self.want_big_cards = tk.IntVar()
         self.want_big_cards.set(0)
-        menu_edit.add_checkbutton(label='Big cards',
-            variable=self.want_big_cards, onvalue=1, offvalue=0)
+        menu_settings.add_radiobutton(label='Small cards',
+            variable=self.want_big_cards, value=0)
+        menu_settings.add_radiobutton(label='Big cards',
+            variable=self.want_big_cards, value=1)
+        # XXX move this down
         menu_help.add_command(label='About',
                                    command=self.show_about_window)
+
+        self.deal_many = tk.IntVar()
+        self.deal_many.set(1)
+        menu_settings.add_radiobutton(label='Deal 1', variable=self.deal_many,
+            value=1)
+        menu_settings.add_radiobutton(label='Deal 2', variable=self.deal_many,
+            value=2)
+        menu_settings.add_radiobutton(label='Deal random',
+            variable=self.deal_many, value=3)
 
     def build_frames(self) -> None:
         self.canvas = tk.Canvas(self,
@@ -68,7 +81,7 @@ class GameWindow(tk.Tk):
         self.status_text.set('')
 
     def show_about_window(self) -> None:
-        tkmb.showinfo(message='Card Counting Trainer 0.01')
+        tkmb.showinfo(message=f'Card Counting Trainer {VERSION}')
 
     def start_manual(self) -> None:
         if self.want_big_cards.get():
@@ -87,6 +100,16 @@ class GameWindow(tk.Tk):
             self.canvas.delete('all')
             self.canvas.create_image(150, 150, image=card.image)
             self.cards_dealt += 1
+            if self.deal_many.get() == 2:
+                card = self.shoe.deal()
+                self.canvas.create_image(300, 150, image=card.image)
+                self.cards_dealt += 1
+            elif self.deal_many.get() == 3:
+                r = random.randint(0, 1)
+                if r == 1 and self.cards_dealt < 52:
+                    card = self.shoe.deal()
+                    self.canvas.create_image(300, 150, image=card.image)
+                    self.cards_dealt += 1
             self.status_text.set(f'Cards dealt: {self.cards_dealt}')
         else:
             self.button_deal.state(['disabled'])
