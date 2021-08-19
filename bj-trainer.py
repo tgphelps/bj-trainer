@@ -25,11 +25,16 @@ class GameWindow(tk.Tk):
         self['menu'] = self.menu_bar
 
         self.menu_file = tk.Menu(self.menu_bar)
+        self.menu_edit = tk.Menu(self.menu_bar)
         self.menu_help = tk.Menu(self.menu_bar)
         self.menu_bar.add_cascade(menu=self.menu_file, label='File')
+        self.menu_bar.add_cascade(menu=self.menu_edit, label='Edit')
         self.menu_bar.add_cascade(menu=self.menu_help, label='Help')
 
+        self.menu_file.add_command(label='New basic strategy session')
         self.menu_file.add_command(label='Quit', command=self.quit)
+
+        self.menu_edit.add_command(label='Settings')
         self.menu_help.add_command(label='About',
                                    command=self.show_about_window)
 

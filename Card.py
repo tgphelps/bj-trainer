@@ -1,16 +1,19 @@
 
 import tkinter as tk
 
+# NOTE: These card images are 74x107 pixels
+CARDS_DIR = 'cards'
+
 
 class Card:
-    def __init__(self, rank: str, suit: str):
+    def __init__(self, rank: str, suit: str) -> None:
         if rank in ('king', 'queen', 'jack'):
             self.value = 10
         elif rank == '1':
             self.value = 11
         else:
             self.value = int(rank)
-        image_name = f'cards/{rank}_{suit}.png'
+        image_name = f'{CARDS_DIR}/{rank}_{suit}.png'
         self.image = tk.PhotoImage(file=image_name)
 
 
