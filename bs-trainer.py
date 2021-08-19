@@ -13,14 +13,14 @@ PLAYER_HEIGHT = 600
 class GameWindow(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("BJ Trainer")
+        self.title("Basic Strategy Trainer")
         self.option_add('*tearOff', tk.FALSE)
 
         self.build_menu()
         self.build_frames()
         self.build_bottom()
 
-    def build_menu(self):
+    def build_menu(self) -> None:
         self.menu_bar = tk.Menu(self)
         self['menu'] = self.menu_bar
 
@@ -31,14 +31,14 @@ class GameWindow(tk.Tk):
         self.menu_bar.add_cascade(menu=self.menu_edit, label='Edit')
         self.menu_bar.add_cascade(menu=self.menu_help, label='Help')
 
-        self.menu_file.add_command(label='New basic strategy session')
+        self.menu_file.add_command(label='New session')
         self.menu_file.add_command(label='Quit', command=self.quit)
 
         self.menu_edit.add_command(label='Settings')
         self.menu_help.add_command(label='About',
                                    command=self.show_about_window)
 
-    def build_frames(self):
+    def build_frames(self) -> None:
         self.dealer_canvas = tk.Canvas(self,
             width=WINDOW_WIDTH, height=DEALER_HEIGHT, background='green')
         self.player_canvas = tk.Canvas(self,
@@ -50,21 +50,21 @@ class GameWindow(tk.Tk):
         self.rowconfigure(1, weight=2)
         self.columnconfigure(0, weight=1)
 
-    def build_bottom(self):
+    def build_bottom(self) -> None:
         self.button_frame = tk.Frame(self)
         self.button_frame.grid(row=10, column=0)
+        self.button_deal = ttk.Button(self.button_frame, text='Deal')
+        self.button_deal.grid(row=10, column=0)
         self.button_stand = ttk.Button(self.button_frame, text='Stand')
-        self.button_stand.grid(row=10, column=0)
+        self.button_stand.grid(row=10, column=1)
         self.button_hit = ttk.Button(self.button_frame, text='Hit')
-        self.button_hit.grid(row=10, column=1)
+        self.button_hit.grid(row=10, column=2)
         self.button_dbl = ttk.Button(self.button_frame, text='Double')
-        self.button_dbl.grid(row=10, column=2)
+        self.button_dbl.grid(row=10, column=3)
         self.button_split = ttk.Button(self.button_frame, text='Split')
-        self.button_split.grid(row=10, column=3)
+        self.button_split.grid(row=10, column=4)
         self.button_surr = ttk.Button(self.button_frame, text='Surrender')
-        self.button_surr.grid(row=10, column=4)
-        self.button_shuf = ttk.Button(self.button_frame, text='Shuffle')
-        self.button_shuf.grid(row=10, column=5)
+        self.button_surr.grid(row=10, column=5)
         self.button_test = ttk.Button(self.button_frame, text='TEST',
                                       command=self.testing)
         self.button_test.grid(row=10, column=6)
@@ -75,14 +75,10 @@ class GameWindow(tk.Tk):
         self.status_bar.grid(row=11, column=0, sticky='ew')
         self.status_text.set('My status bar')
 
-    def show_about_window(self):
-        tkmb.showinfo(message='About message goes here')
-        # print(dir(self.dealer_canvas))
-        print(self.winfo_width(), self.winfo_height())
-        print(self.dealer_canvas.winfo_width(),
-              self.dealer_canvas.winfo_height())
+    def show_about_window(self) -> None:
+        tkmb.showinfo(message='Basic Strategy Trainer 0.01')
 
-    def testing(self):
+    def testing(self) -> None:
         self.status_text.set('testing')
 
 

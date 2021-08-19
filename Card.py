@@ -1,12 +1,13 @@
 
 import tkinter as tk
+from PIL import ImageTk, Image
 
 # NOTE: These card images are 74x107 pixels
 CARDS_DIR = 'cards'
 
 
 class Card:
-    def __init__(self, rank: str, suit: str) -> None:
+    def __init__(self, rank: str, suit: str, card_size=1) -> None:
         if rank in ('king', 'queen', 'jack'):
             self.value = 10
         elif rank == '1':
@@ -14,10 +15,13 @@ class Card:
         else:
             self.value = int(rank)
         image_name = f'{CARDS_DIR}/{rank}_{suit}.png'
-        self.image = tk.PhotoImage(file=image_name)
+        image = Image.open(image_name)
+        big_image = \
+            image.resize((74 * card_size, 107 * card_size), Image.ANTIALIAS)
+        new_image = ImageTk.PhotoImage(big_image)
+        # self.image = tk.PhotoImage(file=image_name)
+        self.image = new_image
 
-
-# For testing
 
 if __name__ == '__main__':
     win = tk.Tk()

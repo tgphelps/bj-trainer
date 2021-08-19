@@ -9,6 +9,7 @@ mypy = "*"
 
 [packages]
 docopt = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.9"
